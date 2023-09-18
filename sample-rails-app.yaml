@@ -1,0 +1,59 @@
+namespace: sample-rails-app
+sample-rails-app:
+  defines: runnable
+  metadata:
+    name: sample-rails-app
+    description: This is a sample Ruby on Rails application.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    sample-rails-app:
+      build: .
+  services:
+    debug:
+      container: sample-rails-app
+      port: 1234
+      host-port: 1234
+      publish: false
+      protocol: TCP
+      description: Port for debugging applications
+    web:
+      container: sample-rails-app
+      port: 3000
+      host-port: 3000
+      publish: false
+      protocol: TCP
+      description: Main port for web service
+    debug2:
+      container: sample-rails-app
+      port: 26166
+      host-port: 26166
+      publish: false
+      protocol: TCP
+      description: Another port for debugging applications
+    db:
+      container: sample-rails-app
+      port: 54333
+      host-port: 54333
+      publish: false
+      protocol: TCP
+      description: Port for the database service
+  connections:
+    db:
+      target: postgresql/db
+      service: postgres
+  variables:
+    postgres-host-auth-method:
+      env: POSTGRES_HOST_AUTH_METHOD
+      type: string
+      description: Method for Postgres host authentication
+      value: trust
+    rails-max-threads:
+      env: RAILS_MAX_THREADS
+      type: string
+      description: Maximum number of threads for Rails
+      value: '5'
+    sample-app-database-password:
+      env: SAMPLE_APP_DATABASE_PASSWORD
+      type: string
+      description: Password for the sample app database
+      value: '!!!SETME!!!'
